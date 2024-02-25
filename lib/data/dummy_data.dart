@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-
 import 'package:udemy_flutter_section8/model/category.dart';
+
+
 
 const availableCategories = [
   Category(
