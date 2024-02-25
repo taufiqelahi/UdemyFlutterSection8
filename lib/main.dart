@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:udemy_flutter_section8/category_screen.dart';
+import 'package:udemy_flutter_section8/screen/category_screen.dart';
 
 void main() {
   runApp(const MyApp());
