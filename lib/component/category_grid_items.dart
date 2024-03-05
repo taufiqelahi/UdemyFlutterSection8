@@ -15,7 +15,9 @@ class CategoryGridItems extends StatelessWidget {
     return InkWell(
       borderRadius: BorderRadius.circular(16),
       onTap: () {
-        final filerteredlist =dummyMeals.where((element) => element.categories.contains(category.id)).toList();
+        final filerteredlist = dummyMeals
+            .where((element) => element.categories.contains(category.id))
+            .toList();
         Navigator.push(
             context,
             MaterialPageRoute(
