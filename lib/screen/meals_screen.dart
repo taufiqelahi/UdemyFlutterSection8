@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:udemy_flutter_section8/component/meal_item_trait.dart';
 import 'package:udemy_flutter_section8/model/meals.dart';
+import 'package:udemy_flutter_section8/screen/meals_details_screen.dart';
 
 class MealsScreen extends StatelessWidget {
   const MealsScreen({super.key, required this.title, required this.meal});
@@ -23,7 +24,9 @@ class MealsScreen extends StatelessWidget {
                               borderRadius: BorderRadius.circular(20)),
                           clipBehavior: Clip.hardEdge,
                           child: InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (_)=>MealsDetailsScreen(meal:e)));
+                            },
                             child: Stack(
                               children: [
                                 FadeInImage(
