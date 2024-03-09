@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:udemy_flutter_section8/model/meals.dart';
 import 'package:udemy_flutter_section8/screen/category_screen.dart';
 import 'package:udemy_flutter_section8/screen/meals_screen.dart';
 
@@ -10,21 +11,56 @@ class TabBarViewScreen extends StatefulWidget {
 }
 
 class _TabBarViewScreenState extends State<TabBarViewScreen> {
+  List<Meal> favouriteMeals = [];
+  void favouriteMeal(Meal meal) {
+    final isExisting = favouriteMeals.contains(meal);
+    print(isExisting);
+
+    if (isExisting) {
+      setState(() {
+        favouriteMeals.remove(meal);
+      });
+      _showInfoMessage('Meal is no longer a favorite.');
+    } else {
+      setState(() {
+        favouriteMeals.add(meal);
+        _showInfoMessage('Marked as a favorite!');
+      });
+    }
+  }
+
+  void _showInfoMessage(String s) {
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(s),
+      ),
+    );
+  }
+
   int index = 0;
- List<Widget> widgets=[
-    CategoryScreen(),
-    MealsScreen(title: 'Favourite', meal: [])
-  ];
+
   @override
   Widget build(BuildContext context) {
+    List<Widget> widgets = [
+      CategoryScreen(
+        onPressed: favouriteMeal,
+      ),
+      MealsScreen(
+        title: 'Favourite',
+        meal: favouriteMeals,
+        onPreesed: favouriteMeal,
+      )
+    ];
+
     return Scaffold(
-      body:Center(
+      body: Center(
         child: widgets.elementAt(index),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        onTap: (i){
+        onTap: (i) {
           setState(() {
-            index=i;
+            index = i;
           });
         },
         currentIndex: index,

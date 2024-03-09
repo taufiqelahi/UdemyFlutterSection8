@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:udemy_flutter_section8/data/dummy_data.dart';
 import 'package:udemy_flutter_section8/model/category.dart';
+import 'package:udemy_flutter_section8/model/meals.dart';
 import 'package:udemy_flutter_section8/screen/meals_screen.dart';
 
 class CategoryGridItems extends StatelessWidget {
   final Categories category;
+  final void Function(Meal meal) onPressed;
   const CategoryGridItems({
     super.key,
-    required this.category,
+    required this.category, required this.onPressed,
   });
 
   @override
@@ -22,7 +24,7 @@ class CategoryGridItems extends StatelessWidget {
             context,
             MaterialPageRoute(
                 builder: (_) =>
-                    MealsScreen(title: category.title, meal: filerteredlist)));
+                    MealsScreen(title: category.title, meal: filerteredlist, onPreesed:onPressed )));
       },
       child: Container(
         padding: const EdgeInsets.all(18),

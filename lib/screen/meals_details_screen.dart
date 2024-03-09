@@ -3,14 +3,25 @@ import 'package:transparent_image/transparent_image.dart';
 import 'package:udemy_flutter_section8/model/meals.dart';
 
 class MealsDetailsScreen extends StatelessWidget {
-  const MealsDetailsScreen({super.key, required this.meal});
+  const MealsDetailsScreen(
+      {super.key, required this.meal, required this.onPreesed});
   final Meal meal;
+
+  final void Function(Meal meal) onPreesed;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
         title: Text(meal.title),
+        actions: [
+          IconButton(
+              onPressed: () {
+                onPreesed(meal);
+              },
+              icon: Icon(Icons.star))
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(

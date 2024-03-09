@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:udemy_flutter_section8/component/meal_item_trait.dart';
@@ -6,15 +5,19 @@ import 'package:udemy_flutter_section8/model/meals.dart';
 import 'package:udemy_flutter_section8/screen/meals_details_screen.dart';
 
 class MealsScreen extends StatelessWidget {
-  const MealsScreen({super.key, required this.title, required this.meal});
+  const MealsScreen(
+      {super.key,
+      required this.title,
+      required this.meal,
+      required this.onPreesed});
   final String title;
   final List<Meal> meal;
+  final void Function(Meal meal) onPreesed;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-
           title: Text(title),
         ),
         body: meal.isNotEmpty
@@ -26,7 +29,13 @@ class MealsScreen extends StatelessWidget {
                           clipBehavior: Clip.hardEdge,
                           child: InkWell(
                             onTap: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (_)=>MealsDetailsScreen(meal:e)));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => MealsDetailsScreen(
+                                            meal: e,
+                                            onPreesed: onPreesed,
+                                          )));
                             },
                             child: Stack(
                               children: [
