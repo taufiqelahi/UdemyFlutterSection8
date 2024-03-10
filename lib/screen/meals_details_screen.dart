@@ -20,7 +20,7 @@ class MealsDetailsScreen extends StatelessWidget {
               onPressed: () {
                 onPreesed(meal);
               },
-              icon: Icon(Icons.star))
+              icon: const Icon(Icons.star))
         ],
       ),
       body: SingleChildScrollView(
