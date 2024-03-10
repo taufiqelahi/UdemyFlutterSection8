@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class DrawerScreen extends StatelessWidget {
-  const DrawerScreen({super.key});
+  const DrawerScreen({super.key, required this.onChanged});
+  final void Function(String value) onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -36,12 +37,16 @@ class DrawerScreen extends StatelessWidget {
                   ],
                 )),
             ListTile(
-              onTap: (){},
+              onTap: (){
+                onChanged('meals');
+              },
               leading: const Icon(Icons.restaurant,size: 26,color: Colors.black,),
               title: const Text('Meals',style: TextStyle(fontSize: 24),),
             ),
             ListTile(
-              onTap: (){},
+              onTap: (){
+                onChanged('filter');
+              },
               leading: const Icon(Icons.settings,size: 26,color: Colors.black,),
               title: const Text('Settings',style: TextStyle(fontSize: 24),),
             )

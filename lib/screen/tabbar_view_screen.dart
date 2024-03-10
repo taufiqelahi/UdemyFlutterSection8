@@ -40,6 +40,13 @@ class _TabBarViewScreenState extends State<TabBarViewScreen> {
   }
 
   int index = 0;
+  void setValue(String value){
+    if(value=='meals'){
+      return Navigator.pop(context);
+    }else{
+      //filter screen navigation
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +65,7 @@ class _TabBarViewScreenState extends State<TabBarViewScreen> {
         centerTitle: false,
         title: Text(index == 0 ? 'Categories' : 'Favourite'),
       ),
-      drawer:DrawerScreen(),
+      drawer:DrawerScreen(onChanged:setValue,),
       body: Center(
         child: widgets.elementAt(index),
       ),
