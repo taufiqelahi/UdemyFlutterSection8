@@ -48,7 +48,7 @@ class DrawerScreen extends StatelessWidget {
                 onChanged('filter');
               },
               leading: const Icon(Icons.settings,size: 26,color: Colors.black,),
-              title: const Text('Settings',style: TextStyle(fontSize: 24),),
+              title: const Text('Filter meals',style: TextStyle(fontSize: 24),),
             )
           ],
         ));

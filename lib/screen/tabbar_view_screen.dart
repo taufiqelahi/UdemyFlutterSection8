@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:udemy_flutter_section8/component/drawer_screen.dart';
 import 'package:udemy_flutter_section8/model/meals.dart';
 import 'package:udemy_flutter_section8/screen/category_screen.dart';
+import 'package:udemy_flutter_section8/screen/filter_screen.dart';
 import 'package:udemy_flutter_section8/screen/meals_screen.dart';
 
 class TabBarViewScreen extends StatefulWidget {
@@ -40,11 +41,10 @@ class _TabBarViewScreenState extends State<TabBarViewScreen> {
   }
 
   int index = 0;
-  void setValue(String value){
-    if(value=='meals'){
-      return Navigator.pop(context);
-    }else{
-      //filter screen navigation
+  void setValue(String value) {
+    Navigator.pop(context);
+    if (value == 'filter') {
+      Navigator.push(context, MaterialPageRoute(builder: (_)=>FilterScreen()));
     }
   }
 
@@ -65,7 +65,9 @@ class _TabBarViewScreenState extends State<TabBarViewScreen> {
         centerTitle: false,
         title: Text(index == 0 ? 'Categories' : 'Favourite'),
       ),
-      drawer:DrawerScreen(onChanged:setValue,),
+      drawer: DrawerScreen(
+        onChanged: setValue,
+      ),
       body: Center(
         child: widgets.elementAt(index),
       ),
