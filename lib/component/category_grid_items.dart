@@ -6,7 +6,7 @@ import 'package:udemy_flutter_section8/screen/meals_screen.dart';
 
 class CategoryGridItems extends StatelessWidget {
   final Categories category;
-  final void Function(Meal meal) onPressed;
+  final void Function() onPressed;
   const CategoryGridItems({
     super.key,
     required this.category, required this.onPressed,
@@ -16,16 +16,7 @@ class CategoryGridItems extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(16),
-      onTap: () {
-        final filerteredlist = dummyMeals
-            .where((element) => element.categories.contains(category.id))
-            .toList();
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (_) =>
-                    MealsScreen(title: category.title, meal: filerteredlist, onPreesed:onPressed )));
-      },
+      onTap:onPressed,
       child: Container(
         padding: const EdgeInsets.all(18),
         decoration: BoxDecoration(

@@ -1,5 +1,13 @@
 import 'package:flutter/material.dart';
 
+enum Filter{
+  gulten,
+  lactose,
+  vegetarian,
+  vegan
+
+}
+
 class FilterScreen extends StatefulWidget {
   const FilterScreen({super.key});
 
@@ -18,85 +26,98 @@ class _FilterScreenState extends State<FilterScreen> {
       appBar: AppBar(
         title: const Text('Your Filter'),
       ),
-      body: Column(
-        children: [
-          SwitchListTile(
-            value: gultenFilter,
-            onChanged: (isSelected) {
-              setState(() {
-                gultenFilter = isSelected;
-              });
-            },
-            title: const Text(
-              'Gulten-free',
-              style: TextStyle(fontSize: 24),
+      body: PopScope(
+        canPop: false,
+        onPopInvoked: (d) async{
+          if(d) return;
+          Navigator.of(context).pop({
+            Filter.gulten:gultenFilter,
+            Filter.lactose:lactoseFilter,
+            Filter.vegetarian:vegetarianFilter,
+            Filter.vegan:veganFilter
+          });
+
+        },
+        child: Column(
+          children: [
+            SwitchListTile(
+              value: gultenFilter,
+              onChanged: (isSelected) {
+                setState(() {
+                  gultenFilter = isSelected;
+                });
+              },
+              title: const Text(
+                'Gulten-free',
+                style: TextStyle(fontSize: 24),
+              ),
+              subtitle: const Text(
+                'Only Gulten-free meals',
+                style: TextStyle(fontSize: 16),
+              ),
+              contentPadding: const EdgeInsets.all(20),
+              activeColor: Colors.green.withOpacity(.8),
+              activeTrackColor: Colors.black54,
             ),
-            subtitle: const Text(
-              'Only Gulten-free meals',
-              style: TextStyle(fontSize: 16),
+            SwitchListTile(
+              value: lactoseFilter,
+              onChanged: (isSelected) {
+                setState(() {
+                  lactoseFilter = isSelected;
+                });
+              },
+              title: const Text(
+                'Lactose-free',
+                style: TextStyle(fontSize: 24),
+              ),
+              subtitle: const Text(
+                'Only Lactose-free meals',
+                style: TextStyle(fontSize: 16),
+              ),
+              contentPadding: const EdgeInsets.all(20),
+              activeColor: Colors.green.withOpacity(.8),
+              activeTrackColor: Colors.black54,
             ),
-            contentPadding: const EdgeInsets.all(20),
-            activeColor: Colors.green.withOpacity(.8),
-            activeTrackColor: Colors.black54,
-          ),
-          SwitchListTile(
-            value: lactoseFilter,
-            onChanged: (isSelected) {
-              setState(() {
-                lactoseFilter = isSelected;
-              });
-            },
-            title: const Text(
-              'Lactose-free',
-              style: TextStyle(fontSize: 24),
+            SwitchListTile(
+              value: vegetarianFilter,
+              onChanged: (isSelected) {
+                setState(() {
+                  vegetarianFilter = isSelected;
+                });
+              },
+              title: const Text(
+                'Vegetarian',
+                style: TextStyle(fontSize: 24),
+              ),
+              subtitle: const Text(
+                'Only Vegetarian meals',
+                style: TextStyle(fontSize: 16),
+              ),
+              contentPadding: const EdgeInsets.all(20),
+              activeColor: Colors.green.withOpacity(.8),
+              activeTrackColor: Colors.black54,
             ),
-            subtitle: const Text(
-              'Only Lactose-free meals',
-              style: TextStyle(fontSize: 16),
-            ),
-            contentPadding: const EdgeInsets.all(20),
-            activeColor: Colors.green.withOpacity(.8),
-            activeTrackColor: Colors.black54,
-          ),
-          SwitchListTile(
-            value: vegetarianFilter,
-            onChanged: (isSelected) {
-              setState(() {
-                vegetarianFilter = isSelected;
-              });
-            },
-            title: const Text(
-              'Vegetarian',
-              style: TextStyle(fontSize: 24),
-            ),
-            subtitle: const Text(
-              'Only Vegetarian meals',
-              style: TextStyle(fontSize: 16),
-            ),
-            contentPadding: const EdgeInsets.all(20),
-            activeColor: Colors.green.withOpacity(.8),
-            activeTrackColor: Colors.black54,
-          ),
-          SwitchListTile(
-            value: veganFilter,
-            onChanged: (isSelected) {
-              setState(() {
-                veganFilter = isSelected;
-              });
-            },
-            title: const Text(
-              'Vegan',
-              style: TextStyle(fontSize: 24),
-            ),
-            subtitle: const Text(
-              'Only Vegan meals',
-              style: TextStyle(fontSize: 16),
-            ),
-            contentPadding: const EdgeInsets.all(20),
-            activeColor: Colors.green.withOpacity(.8),
-            activeTrackColor: Colors.black54,
-          )
-        ],
+            SwitchListTile(
+              value: veganFilter,
+              onChanged: (isSelected) {
+                setState(() {
+                  veganFilter = isSelected;
+                });
+              },
+              title: const Text(
+                'Vegan',
+                style: TextStyle(fontSize: 24),
+              ),
+              subtitle: const Text(
+                'Only Vegan meals',
+                style: TextStyle(fontSize: 16),
+              ),
+              contentPadding: const EdgeInsets.all(20),
+              activeColor: Colors.green.withOpacity(.8),
+              activeTrackColor: Colors.black54,
+            )
+          ],
+        ),
       ),
     );
   }

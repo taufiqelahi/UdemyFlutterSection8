@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:udemy_flutter_section8/component/drawer_screen.dart';
+import 'package:udemy_flutter_section8/data/dummy_data.dart';
 import 'package:udemy_flutter_section8/model/meals.dart';
 import 'package:udemy_flutter_section8/screen/category_screen.dart';
 import 'package:udemy_flutter_section8/screen/filter_screen.dart';
@@ -14,6 +15,14 @@ class TabBarViewScreen extends StatefulWidget {
 
 class _TabBarViewScreenState extends State<TabBarViewScreen> {
   List<Meal> favouriteMeals = [];
+  Map<Filter,bool>selectedItems={
+    Filter.gulten:false,
+    Filter.lactose:false,
+    Filter.vegetarian:false,
+    Filter.vegan:false,
+
+
+  };
   void favouriteMeal(Meal meal) {
     final isExisting = favouriteMeals.contains(meal);
     print(isExisting);
@@ -41,18 +50,36 @@ class _TabBarViewScreenState extends State<TabBarViewScreen> {
   }
 
   int index = 0;
-  void setValue(String value) {
+  void setValue(String value) async{
     Navigator.pop(context);
     if (value == 'filter') {
-      Navigator.push(context, MaterialPageRoute(builder: (_)=>FilterScreen()));
+    final result=await  Navigator.push<Map<Filter,bool>>(
+          context, MaterialPageRoute(builder: (_) => FilterScreen()));
+
+   setState(() {
+     selectedItems=result!;
+   });
     }
   }
 
   @override
   Widget build(BuildContext context) {
+final filteredMeals=dummyMeals.where((element) {
+  if(selectedItems[Filter.gulten]!&&!element.isGlutenFree) {
+
+    return false;
+  }
+  if(selectedItems[Filter.lactose]!&&!element.isLactoseFree )return false;
+  if(selectedItems[Filter.vegetarian]!&&!element.isVegetarian) return false;
+  if(selectedItems[Filter.vegan]!&&!element.isVegan) return false;
+return true;
+
+
+}).toList();
+
     List<Widget> widgets = [
       CategoryScreen(
-        onPressed: favouriteMeal,
+        onPressed: favouriteMeal, filterMeal:filteredMeals,
       ),
       MealsScreen(
         meal: favouriteMeals,
