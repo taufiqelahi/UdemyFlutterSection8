@@ -66,12 +66,12 @@ class _TabBarViewScreenState extends State<TabBarViewScreen> {
   Widget build(BuildContext context) {
 final filteredMeals=dummyMeals.where((element) {
   if(selectedItems[Filter.gulten]!&&!element.isGlutenFree) {
-
     return false;
   }
   if(selectedItems[Filter.lactose]!&&!element.isLactoseFree )return false;
   if(selectedItems[Filter.vegetarian]!&&!element.isVegetarian) return false;
   if(selectedItems[Filter.vegan]!&&!element.isVegan) return false;
+
 return true;
 
 
