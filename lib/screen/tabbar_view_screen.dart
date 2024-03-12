@@ -25,7 +25,7 @@ class _TabBarViewScreenState extends State<TabBarViewScreen> {
   };
   void favouriteMeal(Meal meal) {
     final isExisting = favouriteMeals.contains(meal);
-    print(isExisting);
+
 
     if (isExisting) {
       setState(() {
@@ -54,7 +54,7 @@ class _TabBarViewScreenState extends State<TabBarViewScreen> {
     Navigator.pop(context);
     if (value == 'filter') {
     final result=await  Navigator.push<Map<Filter,bool>>(
-          context, MaterialPageRoute(builder: (_) => FilterScreen()));
+          context, MaterialPageRoute(builder: (_) => FilterScreen(currentFiltered: selectedItems,)));
 
    setState(() {
      selectedItems=result!;

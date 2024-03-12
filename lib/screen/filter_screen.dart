@@ -1,16 +1,10 @@
 import 'package:flutter/material.dart';
 
-enum Filter{
-  gulten,
-  lactose,
-  vegetarian,
-  vegan
-
-}
+enum Filter { gulten, lactose, vegetarian, vegan }
 
 class FilterScreen extends StatefulWidget {
-  const FilterScreen({super.key});
-
+  const FilterScreen({super.key, required this.currentFiltered});
+final Map<Filter,bool> currentFiltered;
   @override
   State<FilterScreen> createState() => _FilterScreenState();
 }
@@ -18,8 +12,19 @@ class FilterScreen extends StatefulWidget {
 class _FilterScreenState extends State<FilterScreen> {
   bool gultenFilter = false;
   bool lactoseFilter = false;
-  bool vegetarianFilter=false;
-  bool veganFilter=false;
+  bool vegetarianFilter = false;
+  bool veganFilter = false;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    gultenFilter=widget.currentFiltered[Filter.gulten]!;
+    lactoseFilter=widget.currentFiltered[Filter.lactose]!;
+    vegetarianFilter=widget.currentFiltered[Filter.vegetarian]!;
+    veganFilter=widget.currentFiltered[Filter.vegan]!;
+
+
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,15 +33,14 @@ class _FilterScreenState extends State<FilterScreen> {
       ),
       body: PopScope(
         canPop: false,
-        onPopInvoked: (d) async{
-          if(d) return;
+        onPopInvoked: (d) async {
+          if (d) return;
           Navigator.of(context).pop({
-            Filter.gulten:gultenFilter,
-            Filter.lactose:lactoseFilter,
-            Filter.vegetarian:vegetarianFilter,
-            Filter.vegan:veganFilter
+            Filter.gulten: gultenFilter,
+            Filter.lactose: lactoseFilter,
+            Filter.vegetarian: vegetarianFilter,
+            Filter.vegan: veganFilter
           });
-
         },
         child: Column(
           children: [
