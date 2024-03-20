@@ -6,10 +6,10 @@ import 'package:udemy_flutter_section8/screen/meals_details_screen.dart';
 
 class MealsScreen extends StatelessWidget {
   const MealsScreen(
-      {super.key, this.title, required this.meal, required this.onPreesed});
+      {super.key, this.title, required this.meal, });
   final String? title;
   final List<Meal> meal;
-  final void Function(Meal meal) onPreesed;
+
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class MealsScreen extends StatelessWidget {
                               MaterialPageRoute(
                                   builder: (_) => MealsDetailsScreen(
                                         meal: e,
-                                        onPreesed: onPreesed,
+
                                       )));
                         },
                         child: Stack(

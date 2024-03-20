@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:udemy_flutter_section8/model/meals.dart';
+import 'package:udemy_flutter_section8/provider/favourite_meal_provider.dart';
 
-class MealsDetailsScreen extends StatelessWidget {
+class MealsDetailsScreen extends ConsumerWidget {
   const MealsDetailsScreen(
-      {super.key, required this.meal, required this.onPreesed});
+      {super.key, required this.meal,});
   final Meal meal;
 
-  final void Function(Meal meal) onPreesed;
+
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context,WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
@@ -18,7 +20,8 @@ class MealsDetailsScreen extends StatelessWidget {
         actions: [
           IconButton(
               onPressed: () {
-                onPreesed(meal);
+               ref.read(favouriteMealProvider.notifier).favouriteMeal(meal: meal, context: context);
+              
               },
               icon: const Icon(Icons.star))
         ],

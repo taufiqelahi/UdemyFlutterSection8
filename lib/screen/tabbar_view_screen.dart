@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:udemy_flutter_section8/component/drawer_screen.dart';
 import 'package:udemy_flutter_section8/data/dummy_data.dart';
 import 'package:udemy_flutter_section8/model/meals.dart';
+import 'package:udemy_flutter_section8/provider/favourite_meal_provider.dart';
 import 'package:udemy_flutter_section8/provider/meals_provider.dart';
 import 'package:udemy_flutter_section8/screen/category_screen.dart';
 import 'package:udemy_flutter_section8/screen/filter_screen.dart';
@@ -16,7 +17,7 @@ class TabBarViewScreen extends ConsumerStatefulWidget {
 }
 
 class _TabBarViewScreenState extends ConsumerState<TabBarViewScreen> {
-  List<Meal> favouriteMeals = [];
+
   Map<Filter,bool>selectedItems={
     Filter.gulten:false,
     Filter.lactose:false,
@@ -25,31 +26,9 @@ class _TabBarViewScreenState extends ConsumerState<TabBarViewScreen> {
 
 
   };
-  void favouriteMeal(Meal meal) {
-    final isExisting = favouriteMeals.contains(meal);
 
 
-    if (isExisting) {
-      setState(() {
-        favouriteMeals.remove(meal);
-      });
-      _showInfoMessage('Meal is no longer a favorite.');
-    } else {
-      setState(() {
-        favouriteMeals.add(meal);
-        _showInfoMessage('Marked as a favorite!');
-      });
-    }
-  }
 
-  void _showInfoMessage(String s) {
-    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(s),
-      ),
-    );
-  }
 
   int index = 0;
   void setValue(String value) async{
@@ -66,6 +45,7 @@ class _TabBarViewScreenState extends ConsumerState<TabBarViewScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final favouriteMeals = ref.watch(favouriteMealProvider);
 final filteredMeals=ref.watch(mealProvider).where((element) {
   if(selectedItems[Filter.gulten]!&&!element.isGlutenFree) {
     return false;
@@ -81,11 +61,11 @@ return true;
 
     List<Widget> widgets = [
       CategoryScreen(
-        onPressed: favouriteMeal, filterMeal:filteredMeals,
+         filterMeal:filteredMeals,
       ),
       MealsScreen(
         meal: favouriteMeals,
-        onPreesed: favouriteMeal,
+
       )
     ];
 
