@@ -7,26 +7,21 @@ final favouriteMealProvider=StateNotifierProvider<FavouriteProvider,List<Meal>>(
 class FavouriteProvider extends StateNotifier<List<Meal>>{
   FavouriteProvider():super([]);
 
-  void favouriteMeal({required Meal meal,required BuildContext context}){
+  bool favouriteMeal({required Meal meal,}){
     final isExisted=state.contains(meal);
 
     if(isExisted){
-      state=state.where((element) => element.id!=meal.id).toList();
-_showInfoMessage('remove meals', context);
+      int index=state.indexWhere((element) => element.id==meal.id);
+      state.removeAt(index);
+      state=[...state];
+      return false;
+
     }else{
       state=[...state,meal];
-      _showInfoMessage('Added to favourite meals', context);
+      return true;
     }
   }
-  void _showInfoMessage(String s,BuildContext context) {
-    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        duration: Duration(seconds: 1),
-        content: Text(s),
-      ),
-    );
-  }
+
 
 
 }
