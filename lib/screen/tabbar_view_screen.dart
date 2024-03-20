@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:udemy_flutter_section8/component/drawer_screen.dart';
 import 'package:udemy_flutter_section8/data/dummy_data.dart';
 import 'package:udemy_flutter_section8/model/meals.dart';
+import 'package:udemy_flutter_section8/provider/meals_provider.dart';
 import 'package:udemy_flutter_section8/screen/category_screen.dart';
 import 'package:udemy_flutter_section8/screen/filter_screen.dart';
 import 'package:udemy_flutter_section8/screen/meals_screen.dart';
 
-class TabBarViewScreen extends StatefulWidget {
+class TabBarViewScreen extends ConsumerStatefulWidget {
   const TabBarViewScreen({super.key});
 
   @override
-  State<TabBarViewScreen> createState() => _TabBarViewScreenState();
+  ConsumerState<TabBarViewScreen> createState() => _TabBarViewScreenState();
 }
 
-class _TabBarViewScreenState extends State<TabBarViewScreen> {
+class _TabBarViewScreenState extends ConsumerState<TabBarViewScreen> {
   List<Meal> favouriteMeals = [];
   Map<Filter,bool>selectedItems={
     Filter.gulten:false,
@@ -64,7 +66,7 @@ class _TabBarViewScreenState extends State<TabBarViewScreen> {
 
   @override
   Widget build(BuildContext context) {
-final filteredMeals=dummyMeals.where((element) {
+final filteredMeals=ref.watch(mealProvider).where((element) {
   if(selectedItems[Filter.gulten]!&&!element.isGlutenFree) {
     return false;
   }
