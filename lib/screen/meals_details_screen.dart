@@ -13,6 +13,8 @@ class MealsDetailsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context,WidgetRef ref) {
+    final favouriteMeal=ref.watch(favouriteMealProvider);
+    final result =favouriteMeal.contains(meal);
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
@@ -30,7 +32,7 @@ class MealsDetailsScreen extends ConsumerWidget {
                );
               
               },
-              icon: const Icon(Icons.star))
+              icon:  Icon(result?Icons.star:Icons.star_border_outlined))
         ],
       ),
       body: SingleChildScrollView(

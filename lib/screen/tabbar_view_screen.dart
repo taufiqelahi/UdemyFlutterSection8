@@ -4,6 +4,7 @@ import 'package:udemy_flutter_section8/component/drawer_screen.dart';
 import 'package:udemy_flutter_section8/data/dummy_data.dart';
 import 'package:udemy_flutter_section8/model/meals.dart';
 import 'package:udemy_flutter_section8/provider/favourite_meal_provider.dart';
+import 'package:udemy_flutter_section8/provider/filter_meal_provider.dart';
 import 'package:udemy_flutter_section8/provider/meals_provider.dart';
 import 'package:udemy_flutter_section8/screen/category_screen.dart';
 import 'package:udemy_flutter_section8/screen/filter_screen.dart';
@@ -17,55 +18,26 @@ class TabBarViewScreen extends ConsumerStatefulWidget {
 }
 
 class _TabBarViewScreenState extends ConsumerState<TabBarViewScreen> {
-
-  Map<Filter,bool>selectedItems={
-    Filter.gulten:false,
-    Filter.lactose:false,
-    Filter.vegetarian:false,
-    Filter.vegan:false,
-
-
-  };
-
-
-
-
   int index = 0;
-  void setValue(String value) async{
+  void setValue(String value) async {
     Navigator.pop(context);
     if (value == 'filter') {
-    final result=await  Navigator.push<Map<Filter,bool>>(
-          context, MaterialPageRoute(builder: (_) => FilterScreen(currentFiltered: selectedItems,)));
-
-   setState(() {
-     selectedItems=result!;
-   });
+      await Navigator.push<Map<Filter, bool>>(
+          context, MaterialPageRoute(builder: (_) => FilterScreen()));
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final favouriteMeals = ref.watch(favouriteMealProvider);
-final filteredMeals=ref.watch(mealProvider).where((element) {
-  if(selectedItems[Filter.gulten]!&&!element.isGlutenFree) {
-    return false;
-  }
-  if(selectedItems[Filter.lactose]!&&!element.isLactoseFree )return false;
-  if(selectedItems[Filter.vegetarian]!&&!element.isVegetarian) return false;
-  if(selectedItems[Filter.vegan]!&&!element.isVegan) return false;
-
-return true;
-
-
-}).toList();
+    final filteredMeals = ref.watch(filterMealsProvider);
 
     List<Widget> widgets = [
       CategoryScreen(
-         filterMeal:filteredMeals,
+        filterMeal: filteredMeals,
       ),
       MealsScreen(
         meal: favouriteMeals,
-
       )
     ];
 
@@ -87,10 +59,10 @@ return true;
           });
         },
         currentIndex: index,
-        items: [
-          const BottomNavigationBarItem(
+        items: const [
+          BottomNavigationBarItem(
               icon: Icon(Icons.set_meal), label: 'Categories'),
-          const BottomNavigationBarItem(
+          BottomNavigationBarItem(
               icon: Icon(Icons.star), label: 'Favourite')
         ],
       ),
