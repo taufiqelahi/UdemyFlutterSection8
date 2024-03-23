@@ -5,16 +5,16 @@ import 'package:udemy_flutter_section8/model/meals.dart';
 import 'package:udemy_flutter_section8/provider/favourite_meal_provider.dart';
 
 class MealsDetailsScreen extends ConsumerWidget {
-  const MealsDetailsScreen(
-      {super.key, required this.meal,});
+  const MealsDetailsScreen({
+    super.key,
+    required this.meal,
+  });
   final Meal meal;
 
-
-
   @override
-  Widget build(BuildContext context,WidgetRef ref) {
-    final favouriteMeal=ref.watch(favouriteMealProvider);
-    final result =favouriteMeal.contains(meal);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final favouriteMeal = ref.watch(favouriteMealProvider);
+    final isFavourite = favouriteMeal.contains(meal);
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
@@ -22,17 +22,33 @@ class MealsDetailsScreen extends ConsumerWidget {
         actions: [
           IconButton(
               onPressed: () {
-              final completed= ref.read(favouriteMealProvider.notifier).favouriteMeal(meal: meal, );
-               ScaffoldMessenger.of(context).clearSnackBars();
-               ScaffoldMessenger.of(context).showSnackBar(
-                 SnackBar(
-                   duration: Duration(seconds: 1),
-                   content: Text(completed?'Favourite meal added':'remove from the favourite'),
-                 ),
-               );
-              
+                final completed =
+                    ref.read(favouriteMealProvider.notifier).favouriteMeal(
+                          meal: meal,
+                        );
+                ScaffoldMessenger.of(context).clearSnackBars();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    duration: Duration(seconds: 1),
+                    content: Text(completed
+                        ? 'Favourite meal added'
+                        : 'remove from the favourite'),
+                  ),
+                );
               },
-              icon:  Icon(result?Icons.star:Icons.star_border_outlined))
+              icon: AnimatedSwitcher(
+                duration: Duration(milliseconds: 300),
+                transitionBuilder: (child, animation) {
+                  return RotationTransition(
+                    turns: animation,
+                    child: child,
+                  );
+                },
+                child: Icon(
+                  isFavourite ? Icons.star : Icons.star_border_outlined,
+                  key: ValueKey(isFavourite),
+                ),
+              ))
         ],
       ),
       body: SingleChildScrollView(
