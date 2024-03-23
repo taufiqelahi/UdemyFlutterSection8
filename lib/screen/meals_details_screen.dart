@@ -46,6 +46,7 @@ class MealsDetailsScreen extends ConsumerWidget {
                 },
                 child: Icon(
                   isFavourite ? Icons.star : Icons.star_border_outlined,
+
                   key: ValueKey(isFavourite),
                 ),
               ))
